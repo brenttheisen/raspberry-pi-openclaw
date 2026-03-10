@@ -2,7 +2,6 @@ services:
   openclaw:
     build:
       context: .
-      platform: linux/arm/v7
     platform: linux/arm/v7
     volumes:
       - ./config:/home/node/.openclaw
