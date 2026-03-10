@@ -1,0 +1,24 @@
+services:
+  openclaw:
+    build:
+      context: .
+      platform: linux/arm/v7
+    platform: linux/arm/v7
+    volumes:
+      - ./config:/home/node/.openclaw
+    ports:
+      - "18789:18789"
+      - "18790:18790"
+    environment:
+      # Uncomment and set the values below as needed
+      - OPENCLAW_GATEWAY_TOKEN=${OPENCLAW_GATEWAY_TOKEN:-}
+      # - CLAUDE_AI_SESSION_KEY=
+      # - CLAUDE_WEB_SESSION_KEY=
+      # - CLAUDE_WEB_COOKIE=
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:18789/healthz"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
